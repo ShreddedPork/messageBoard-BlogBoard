@@ -1,0 +1,24 @@
+<%- include('Partials/header'); -%>
+
+
+<div class="col-md-5">
+    <% messages.forEach(function(message) { %>
+    <h1> <%= message.text %> </h1>
+    <h4>-<%= message.user %> </h4>
+    <h6> <%= message.added %> </h6>
+    <% }) %>
+</div>
+
+
+<form class="col-md-7" action="/" method="post">
+    <div class="form-group">
+        <label>Name </label>
+        <input class="form-control" type="text" name="user" required></input>
+        <label>Message </label>
+        <textarea class="form-control" rows="4" name="text" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" name="button">Publish</button>
+</form>
+
+
+<%- include('Partials/footer'); -%>
