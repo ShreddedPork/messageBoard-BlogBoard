@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const empty = require(__dirname + "/empty.js");
+const mongoose = require('mongoose')
 
 const messages = [
 	{
@@ -29,10 +30,25 @@ app.use(
 );
 app.use(express.static("public"));
 
+mongoose.connect("mongodb+srv://admin-ryan:Darkstar1!@cluster0.2lbxu.mongodb.net/messageBoardDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const messageSchema = {
+	text: String,
+	user: String,
+	added: Date
+};
+
+const Message = mongoose.model("Message", messageSchema);
+
 app.get("/", function (req, res) {
-	res.render("home", {
-		messages: messages,
-	});
+	Message.find({}, function (err, messages) {
+		res.render("home", {
+		messages: messages
+		});
+  });
 });
 
 app.get("/compose", function (req, res) {
@@ -40,22 +56,22 @@ app.get("/compose", function (req, res) {
 });
 
 app.post("/compose", function (req, res) {
-	const message = {
+	const message = new Message ({
 		user: req.body.user,
 		text: req.body.text,
 		added: new Date(),
-	};
-	messages.push(message);
+	});
+	message.save();
 	res.redirect("/");
 });
 
 app.post("/", function (req, res) {
-	const message = {
+	const message = new Message ({
 		user: req.body.user,
 		text: req.body.text,
 		added: new Date(),
-	};
-	messages.push(message);
+	});
+	message.save();
 	res.redirect("/");
 });
 
