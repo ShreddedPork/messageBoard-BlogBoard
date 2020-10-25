@@ -17,7 +17,7 @@ const messages = [
 		user: "Charles",
 		added: new Date(),
 	},
-];
+]; 
 
 const app = express();
 
