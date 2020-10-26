@@ -3,7 +3,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const empty = require(__dirname + "/empty.js");
 const mongoose = require('mongoose')
 
 const messages = [
